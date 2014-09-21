@@ -1,22 +1,22 @@
-        # From Original Data Sets To One Tidy Data
+# From Original Data Sets To One Tidy Data
 
-explains how all of the scripts work and how they are connected.
+### explains how all of the scripts work and how they are connected.
 
 ================================================================
-## As we are provided, the data sets containing subjects, activity names and measures on dimensions of activities (i.e. 561 dimensions)are divided separately into Test data set and Train data set.
-## We are asked to aggregate these separate data sets into a complete one by extracting only parts of variables we want.
-## I wrote scripts to generate it. The steps and scripts are as follows, describing the process how i read,subset,merge and transform these data sets into a complete one.
+### As we are provided, the data sets containing subjects, activity names and measures on dimensions of activities (i.e. 561 dimensions)are divided separately into Test data set and Train data set.
+### We are asked to aggregate these separate data sets into a complete one by extracting only parts of variables we want.
+### I wrote scripts to generate it. The steps and scripts are as follows, describing the process how i read,subset,merge and transform these data sets into a complete one.
 ================================================================
-# Step 1: Preparation for tidy data
-## First read in activity names and their measures we need for merging purpose later, both for Test set and Train set.
+## Step 1: Preparation for tidy data
+### First read in activity names and their measures we need for merging purpose later, both for Test set and Train set.
 
 variables=read.table("./UCI HAR Dataset/features.txt",sep="")
 activity=read.table("./UCI HAR Dataset/activity_labels.txt",sep="")
 
-# Step 2: Read in Test set data.
-## 1. Load the file of subjects_test, and rename column to "Subject".
-## 2. Load the file of X_test, and rename its columns with "variables" we prepared in step 1.
-## 3. Load the file of Y_test, and rename column to "Activity".
+## Step 2: Read in Test set data.
+### 1. Load the file of subjects_test, and rename column to "Subject".
+### 2. Load the file of X_test, and rename its columns with "variables" we prepared in step 1.
+### 3. Load the file of Y_test, and rename column to "Activity".
 
 testsubject=read.table("./UCI HAR Dataset/test/subject_test.txt"
                        ,sep="",col.names="Subject")
