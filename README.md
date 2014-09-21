@@ -1,12 +1,11 @@
 # From Original Data Sets To One Tidy Data
 
 ### Explain how all of the scripts work and how they are connected.
-
 ================================================================
 As we are provided, the data sets containing subjects, activity names and measures on dimensions of activities (i.e. 561 dimensions)are divided separately into Test data set and Train data set.
-We are asked to aggregate these separate data sets into a complete one by extracting only parts of variables we want.
-I wrote scripts to generate it. The steps and scripts are as follows, describing the process how i read,subset,merge and transform these data sets into a complete one.
-================================================================
+We are asked to aggregate these separate data sets into a complete one by extracting only parts of variables we want.  
+I wrote scripts to generate it. The steps and scripts are as follows, describing the process how i read,subset,merge and transform these data sets into a complete one.  
+
 ## Step 1: Preparation for tidy data
 First read in activity names and their measures we need for merging purpose later, both for Test set and Train set.
 ```
@@ -14,9 +13,9 @@ variables=read.table("./UCI HAR Dataset/features.txt",sep="")
 activity=read.table("./UCI HAR Dataset/activity_labels.txt",sep="")
 ```
 ## Step 2: Read in Test set data.
- 1. Load the file of subjects_test, and rename column to "Subject".
- 2. Load the file of X_test, and rename its columns with "variables" we prepared in step 1.
- 3. Load the file of Y_test, and rename column to "Activity".
+1. Load the file of subjects_test, and rename column to "Subject".
+2. Load the file of X_test, and rename its columns with "variables" we prepared in step 1.
+3. Load the file of Y_test, and rename column to "Activity".
 ```
 testsubject=read.table("./UCI HAR Dataset/test/subject_test.txt"
                        ,sep="",col.names="Subject")
@@ -25,13 +24,13 @@ xtest=read.table("./UCI HAR Dataset/test/X_test.txt",sep=""
 ytest=read.table("./UCI HAR Dataset/test/Y_test.txt",sep=""
                  ,col.names="Activity")
 ```                 
- 4. Extract from "xtest"(i.e.561 dimensions of activities) only measures on mean or standard deviation for each variable. 
- 5. Fetching variable name containing word of "mean" or "std" by grep function, we get a vector of integer column numbers. We then subset from "xtest" these columns with this criteria.
+4.Extract from "xtest"(i.e.561 dimensions of activities) only measures on mean or standard deviation for each variable. 
+5.Fetching variable name containing word of "mean" or "std" by grep function, we get a vector of integer column numbers. We then subset from "xtest" these columns with this criteria.
 ```
 meanvar1=grep("mean",names(xtest)); stdvar1=grep("std",names(xtest))
 xtest1=xtest[,meanvar1]; xtest2=xtest[,stdvar1]
 ```
- 6.Merge subjects,activity name codes and activity dimensions which are measures on mean or SD into one named "Test".
+6.Merge subjects,activity name codes and activity dimensions which are measures on mean or SD into one named "Test".
 ```
 Test=cbind(testsubject,ytest,xtest1,xtest2)
 ```
@@ -46,14 +45,14 @@ xtrain=read.table("./UCI HAR Dataset/train/X_train.txt",sep=""
 ytrain=read.table("./UCI HAR Dataset/train/Y_train.txt",sep=""
                   ,col.names="Activity")
 ```                 
-4. Extract from "xtrain"(i.e.561 dimensions of activities) only measures on mean or standard deviation for each variable. 
-5. Fetching column names containing word of "mean" or "std" by grep function, we get a vector of integer column numbers. We then subset from "xtrain" these columns using this criteria
+4.Extract from "xtrain"(i.e.561 dimensions of activities) only measures on mean or standard deviation for each variable. 
+5.Fetching column names containing word of "mean" or "std" by grep function, we get a vector of integer column numbers. We then subset from "xtrain" these columns using this criteria
 ```
 meanvar2=grep("mean",names(xtrain));stdvar2=grep("std"
             ,names(xtrain))
 xtrain1=xtrain[,meanvar2];xtrain2=xtrain[,stdvar2]
 ```
-6. Merge respondants,activity name codes and activity dimensions which are measures on mean or SD into one named Test set.
+6.Merge respondants,activity name codes and activity dimensions which are measures on mean or SD into one named Test set.
 ```
 Train=cbind(trainsubject,ytrain,xtrain1,xtrain2)
 ```
@@ -67,8 +66,8 @@ We use "Activity" prepared in step 1 to name the activity names by factor functi
 TestTrain$Activity=factor(TestTrain$Activity,levels=activity[,1]
                           ,labels=activity[,2])
 ```
-## Step 6: Appropriately labels the data set with descriptive 
-variable names. Because the columns' names are capitalized, we need to change into lowercases.
+## Step 6: Appropriately labels the data set with descriptive variable names.  
+Because the columns' names are capitalized, we need to change into lowercases.
 ```
 tobereplaced=tolower(names(TestTrain))
 tobereplaced=gsub("\\.","",tobereplaced)
