@@ -69,7 +69,7 @@ TestTrain$Activity=factor(TestTrain$Activity,levels=activity[,1]
                           ,labels=activity[,2])
 ```
 ## Step 6: Appropriately labels the data set with descriptive variable names.  
-We match the column names of the new data set with original data set, and restore it to the original variable name. 
+1. We match the column names of the new data set with original data set, and restore it to the original variable name. 
 ```
 tobereplaced=tolower(names(TestTrain))
 tobereplaced=gsub("\\.","",tobereplaced)
@@ -78,6 +78,10 @@ variables$lower=gsub("-","",variables$lower)
 variables$lower=sub("\\()","",variables$lower)
 variables=variables[variables$lower%in%tobereplaced,]
 variables$V2=as.character(variables$V2)
+```
+ 2.because new data set is to be aggregated by mean on each subjects for each activity, we prefix "Mean." to denote it.
+```
+variables$V2=paste("Mean",variables$V2,sep=".")
 tobereplaced=c(c("Subject","Activity"),variables[,2])
 colnames(TestTrain)=tobereplaced
 ```
